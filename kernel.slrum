@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#SBATCH --job-name=CG_CUDA_hyl
+#SBATCH --partition=dgx2
+#SBATCH --mail-type=end
+#SBATCH --mail-user=yilehu@sjtu.edu.cn
+#SBATCH --output=%j.out
+#SBATCH --error=%j.err
+#SBATCH -n 1
+#SBATCH --gres=gpu:1
+#SBATCH --time=00:10:00
+
+module purge
+module load cuda/10.0.130-gcc-4.8.5
+nvcc kernel.cu Initialization.cpp PrintToFile.cpp -lcufft -o kernel
+./kernel
